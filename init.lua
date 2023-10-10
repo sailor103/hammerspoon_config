@@ -242,6 +242,15 @@ if spoon.Seal then
          fn = function(str) 
             hs.execute("nohup /Applications/WeChat.app/Contents/MacOS/WeChat > /dev/null 2>&1 &")
          end,
+      },
+      ["Quick Slug"] = {
+         keyword = "sg",
+         fn = function(str) 
+            local slug = string.gsub(string.gsub(str,"[^ A-Za-z]",""),"[ ]+","-")
+            slug = string.gsub(slug,",","")
+            slug = string.lower(slug)
+            hs.pasteboard.setContents(slug)
+         end,
       }
     }
     spoon.Seal.plugins.pasteboard.historySize=72
