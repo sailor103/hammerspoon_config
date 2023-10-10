@@ -236,7 +236,7 @@ if spoon.Seal then
     seal_keys = seal_keys or {{"alt"}, "Space"}
     spoon.Seal:bindHotkeys({ show = seal_keys })
     spoon.Seal:loadPlugins({ "apps", "calc", "pasteboard", "filesearch" })
-    spoon.Seal.plugins.pasteboard.historySize=4000
+    spoon.Seal.plugins.pasteboard.historySize=72
     spoon.Seal:start()
 end
 
