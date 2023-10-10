@@ -17,6 +17,7 @@ if not hspoon_list then
     hspoon_list = {
 			"KSheet", 
             -- "BingDaily",
+            "ClipboardTool",
             "Seal",
 			"WinWin",
 			"MouseFollowsFocus",
@@ -258,6 +259,19 @@ if spoon.Seal then
 end
 
 ----------------------------------------------------------------------------------------------------
+-- clipboard history
+if spoon.ClipboardTool then
+    clipboard_keys = clipboard_keys or {{"cmd", "ctrl"}, "C"}
+    spoon.ClipboardTool:bindHotkeys({ show_clipboard = clipboard_keys })
+    spoon.ClipboardTool.paste_on_select = true
+    spoon.ClipboardTool.show_copied_alert = false
+    spoon.ClipboardTool.show_in_menubar = false
+    spoon.ClipboardTool.max_entry_size = 40960
+    spoon.ClipboardTool.max_size = true
+    spoon.ClipboardTool:start()
+end
+
+----------------------------------------------------------------------------------------------------
 -- automouse
 if spoon.MouseFollowsFocus then
 	spoon.MouseFollowsFocus:configure({})
@@ -277,7 +291,7 @@ end
 -- GIS Job KeyWords
 gis_job_keys = gis_job_keys or {{"cmd", "alt", "ctrl"}, "C"}
 if string.len(gis_job_keys[2]) > 0 then
-    spoon.ModalMgr.supervisor:bind(gis_job_keys[1], gis_job_keys[2], "Toggle Hammerspoon Console", function()
+    spoon.ModalMgr.supervisor:bind(gis_job_keys[1], gis_job_keys[2], "GIS Jobs Keywords", function()
         hs.pasteboard.setContents('地理 测绘 遥感 规划 土地 空间信息')
     end)
 end
