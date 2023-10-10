@@ -136,6 +136,10 @@ end
 function obj:loadPlugins(plugins)
     self.chooser = hs.chooser.new(self.completionCallback)
     self.chooser:choices(self.choicesCallback)
+    self.chooser:bgDark(true)
+    -- self.chooser:fgColor({
+    --     hex = "#24BE48",
+    -- })
     self.chooser:queryChangedCallback(self.queryChangedCallback)
 
     for k,plugin_name in pairs(plugins) do

@@ -235,7 +235,15 @@ end
 if spoon.Seal then
     seal_keys = seal_keys or {{"alt"}, "Space"}
     spoon.Seal:bindHotkeys({ show = seal_keys })
-    spoon.Seal:loadPlugins({ "apps", "calc", "pasteboard", "filesearch" })
+    spoon.Seal:loadPlugins({ "apps", "calc", "pasteboard", "filesearch", "useractions" })
+    spoon.Seal.plugins.useractions.actions = {
+      ["Open Multiple Wechat"] = {
+         keyword = "wc",
+         fn = function(str) 
+            hs.execute("nohup /Applications/WeChat.app/Contents/MacOS/WeChat > /dev/null 2>&1 &")
+         end,
+      }
+    }
     spoon.Seal.plugins.pasteboard.historySize=72
     spoon.Seal:start()
 end
