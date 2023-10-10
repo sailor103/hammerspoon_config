@@ -236,7 +236,8 @@ end
 if spoon.Seal then
     seal_keys = seal_keys or {{"alt"}, "Space"}
     spoon.Seal:bindHotkeys({ show = seal_keys })
-    spoon.Seal:loadPlugins({ "apps", "calc", "pasteboard", "filesearch", "useractions" })
+    -- spoon.Seal:loadPlugins({ "apps", "calc", "pasteboard", "filesearch", "useractions" })
+    spoon.Seal:loadPlugins({ "apps", "calc", "filesearch", "useractions" })
     spoon.Seal.plugins.useractions.actions = {
       ["Open Multiple Wechat"] = {
          keyword = "wc",
@@ -254,7 +255,7 @@ if spoon.Seal then
          end,
       }
     }
-    spoon.Seal.plugins.pasteboard.historySize=72
+    -- spoon.Seal.plugins.pasteboard.historySize=72
     spoon.Seal:start()
 end
 
@@ -267,6 +268,7 @@ if spoon.ClipboardTool then
     spoon.ClipboardTool.show_copied_alert = false
     spoon.ClipboardTool.show_in_menubar = false
     spoon.ClipboardTool.max_entry_size = 40960
+    spoon.ClipboardTool.hist_size = 50
     spoon.ClipboardTool.max_size = true
     spoon.ClipboardTool:start()
 end
