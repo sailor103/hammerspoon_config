@@ -223,7 +223,17 @@ function obj.completionCallback(rowInfo)
       if string.find(rowInfo["path"], "%.applescript$") or string.find(rowInfo["path"], "%.scpt$") then
          hs.task.new("/usr/bin/osascript", nil, { rowInfo["path"] }):start()
       else
-         hs.task.new("/usr/bin/open", nil, { rowInfo["path"] }):start()
+         local appName = string.sub(rowInfo["uuid"], 12)
+         local app = hs.application.get(appName)
+
+         if app == nil then
+            hs.application.launchOrFocus(rowInfo["path"])
+          else
+            app:activate()
+            -- 如果是在运行了，但没实际窗口就会启动应用，否则就是激活，暂时可用
+            hs.application.launchOrFocus(rowInfo["path"])
+          end
+
       end
    elseif rowInfo["type"] == "kill" then
       hs.application.get(rowInfo["pid"]):kill()
