@@ -16,7 +16,7 @@ hs.loadSpoon("ModalMgr")
 if not hspoon_list then
     hspoon_list = {
 			"KSheet", 
-            -- "BingDaily",
+            "BingDaily",
             "ClipboardTool",
             "Seal",
 			"WinWin",
@@ -262,13 +262,13 @@ end
 ----------------------------------------------------------------------------------------------------
 -- clipboard history
 if spoon.ClipboardTool then
-    clipboard_keys = clipboard_keys or {{"cmd", "ctrl"}, "C"}
+    clipboard_keys = clipboard_keys or {{"cmd", "alt"}, "C"}
     spoon.ClipboardTool:bindHotkeys({ show_clipboard = clipboard_keys })
     spoon.ClipboardTool.paste_on_select = true
     spoon.ClipboardTool.show_copied_alert = false
     spoon.ClipboardTool.show_in_menubar = false
     spoon.ClipboardTool.max_entry_size = 40960
-    spoon.ClipboardTool.hist_size = 50
+    spoon.ClipboardTool.hist_size = 120
     spoon.ClipboardTool.max_size = true
     spoon.ClipboardTool:start()
 end
