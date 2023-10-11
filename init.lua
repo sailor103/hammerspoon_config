@@ -235,7 +235,7 @@ end
 ----------------------------------------------------------------------------------------------------
 -- Seal 替换Alfred
 if spoon.Seal then
-    seal_keys = seal_keys or {{"alt"}, "Space"}
+    seal_keys = seal_keys or {{"cmd"}, "Space"}
     spoon.Seal:bindHotkeys({ show = seal_keys })
     -- spoon.Seal:loadPlugins({ "apps", "calc", "pasteboard", "filesearch", "useractions" })
     spoon.Seal:loadPlugins({ "apps", "calc", "filesearch", "useractions", "vscode" })
