@@ -14,6 +14,12 @@ obj.itemBuffer = {}
 --- The number of history items to keep. Defaults to 50
 obj.historySize = 50
 
+--- Seal.plugins.pasteboard.paste_on_select
+--- Variable
+---
+--- Whether to auto-type the item when selecting it from the menu. Can be toggled on the fly from the chooser. Defaults to `false`.
+obj.paste_on_select = false
+
 --- Seal.plugins.pasteboard.saveHistory
 --- Variable
 ---
@@ -89,7 +95,7 @@ function obj.choicesPasteboardCommand(query)
             choice["subText"] = pasteboardItem["uti"]
             if hs.application.defaultAppForUTI then
                 local bundleID = hs.application.defaultAppForUTI(pasteboardItem["uti"])
-                print("Default app for "..pasteboardItem["uti"].." :: "..(bundleID or "(null)"))
+                -- print("Default app for "..pasteboardItem["uti"].." :: "..(bundleID or "(null)"))
                 if bundleID then
                     choice["image"] = hs.image.imageFromAppBundle(bundleID)
                 end
@@ -108,6 +114,9 @@ end
 function obj.completionCallback(rowInfo)
     if rowInfo["type"] == "copy" then
         hs.pasteboard.setContents(rowInfo["name"])
+        if (obj.paste_on_select) then
+            hs.eventtap.keyStroke({"cmd"}, "v")
+         end
     end
 end
 
