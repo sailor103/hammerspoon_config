@@ -18,6 +18,7 @@ if not hspoon_list then
 			"KSheet", 
             "BingDaily",
             "ClipboardTool",
+            "HSearch",
             "Seal",
 			"WinWin",
 			"MouseFollowsFocus",
