@@ -163,7 +163,7 @@ function obj:_processSelectedItem(value)
          if value.type == "text" then
             pasteboard.setContents(value.data)
          elseif value.type == "image" then 
-            pasteboard.writeObjects(hs.image.imageFromURL(value.data))
+            pasteboard.writeObjects(hs.image.imageFromPath(value.data))
          end
 --         self:pasteboardToClipboard(value.text)
          if (self.paste_on_select) then
@@ -343,10 +343,10 @@ function obj:_populateChooser(query)
                                   image = hs.image.imageFromName('NSTouchBarTextBoxTemplate'),
                                   type = v.type})
       elseif (v.type == "image") then
-         table.insert(menuData, { text = "《Image data》",
+         table.insert(menuData, { text = "Image",
                                   type = v.type,
                                   data = v.content,
-                                  image = hs.image.imageFromURL(v.content)})
+                                  image = hs.image.imageFromPath(v.content)})
       end
    end
    if #menuData == 0 then
@@ -427,8 +427,11 @@ function obj:checkAndStorePasteboard()
          self.logger.df("current_clipboard = %s", tostring(current_clipboard))
          if (current_clipboard == nil) and (pasteboard.readImage() ~= nil) then
             -- 不保存图片
-            -- current_clipboard = pasteboard.readImage()
-            -- self:pasteboardToClipboard("image", current_clipboard:encodeAsURLString())
+            current_clipboard = pasteboard.readImage()
+            local fileName = hashfn(current_clipboard:encodeAsURLString())
+            local filePathName = os.getenv("HOME").."/.hammerspoon/tmpimgs/"..fileName..'.png'
+            current_clipboard:saveToFile(filePathName)
+            self:pasteboardToClipboard("image", filePathName)
             if self.show_copied_alert then
                 hs.alert.show("Copied image")
             end
