@@ -480,7 +480,7 @@ function obj:start()
    self.selectorobj:queryChangedCallback(function(query)
       self.selectorobj:choices(hs.fnutils.partial(self._populateChooser, self, query))
    end)
-   self.selectorobj:rightClickCallback(hs.fnutils.partial(self._showContextMenu, self))
+   -- self.selectorobj:rightClickCallback(hs.fnutils.partial(self._showContextMenu, self))
    --Checks for changes on the pasteboard. Is it possible to replace with eventtap?
    self.timer = hs.timer.new(self.frequency, hs.fnutils.partial(self.checkAndStorePasteboard, self))
    self.timer:start()
