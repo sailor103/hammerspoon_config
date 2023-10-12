@@ -17,7 +17,7 @@ if not hspoon_list then
     hspoon_list = {
 			"KSheet", 
             -- "BingDaily",
-            -- "ClipboardTool",
+            "ClipboardTool",
             -- "HSearch",
             "Seal",
 			"WinWin",
@@ -39,17 +39,6 @@ if spoon.HSearch then
             spoon.HSearch:toggleShow()
         end)
     end
-end
-
-----------------------------------------------------------------------------------------------------
--- Register Hammerspoon API manual: Open Hammerspoon manual in default browser
-hsman_keys = hsman_keys or {{"cmd", "shift", "ctrl"}, "H"}
-if string.len(hsman_keys[2]) > 0 then
-    spoon.ModalMgr.supervisor:bind(hsman_keys[1], hsman_keys[2], "Read Hammerspoon Manual", function()
-        hs.doc.hsdocs.forceExternalBrowser(true)
-        hs.doc.hsdocs.moduleEntitiesInSidebar(true)
-        hs.doc.hsdocs.help()
-    end)
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -237,8 +226,7 @@ end
 if spoon.Seal then
     seal_keys = seal_keys or {{"cmd"}, "Space"}
     spoon.Seal:bindHotkeys({ show = seal_keys })
-    -- spoon.Seal:loadPlugins({ "apps", "calc", "pasteboard", "filesearch", "useractions" })
-    spoon.Seal:loadPlugins({ "apps", "calc", "filesearch", "useractions", "vscode", "pasteboard" })
+    spoon.Seal:loadPlugins({ "apps", "calc", "filesearch", "useractions", "vscode"--[[, "pasteboard"--]] })
     spoon.Seal.plugins.useractions.actions = {
       ["Open Multiple Wechat"] = {
          keyword = "wc",
@@ -256,29 +244,31 @@ if spoon.Seal then
          end,
       }
     }
-    spoon.Seal.plugins.pasteboard.historySize=100
-    spoon.Seal.plugins.pasteboard.paste_on_select=true
+    -- spoon.Seal.plugins.pasteboard.historySize=100
+    -- spoon.Seal.plugins.pasteboard.paste_on_select=true
     spoon.Seal:start()
 
-    clipboard_keys = clipboard_keys or {{"cmd", "alt"}, "C"}
-    spoon.ModalMgr.supervisor:bind(clipboard_keys[1], clipboard_keys[2], 'Launch h', function()
-        spoon.Seal:show('pb')
-    end)
+    -- clipboard_keys = clipboard_keys or {{"cmd", "alt"}, "C"}
+    -- spoon.ModalMgr.supervisor:bind(clipboard_keys[1], clipboard_keys[2], 'Launch h', function()
+    --     spoon.Seal:show('pb')
+    -- end)
 end
 
 ----------------------------------------------------------------------------------------------------
 -- clipboard history
--- if spoon.ClipboardTool then
---     clipboard_keys = clipboard_keys or {{"cmd", "alt"}, "C"}
---     spoon.ClipboardTool:bindHotkeys({ show_clipboard = clipboard_keys })
---     spoon.ClipboardTool.paste_on_select = true
---     spoon.ClipboardTool.show_copied_alert = false
---     spoon.ClipboardTool.show_in_menubar = false
---     spoon.ClipboardTool.max_entry_size = 40960
---     spoon.ClipboardTool.hist_size = 120
---     spoon.ClipboardTool.max_size = true
---     spoon.ClipboardTool:start()
--- end
+if spoon.ClipboardTool then
+    clipboard_keys = clipboard_keys or {{"cmd", "alt"}, "C"}
+    spoon.ClipboardTool:bindHotkeys({ show_clipboard = clipboard_keys })
+    spoon.ClipboardTool.paste_on_select = true
+    spoon.ClipboardTool.show_copied_alert = false
+    spoon.ClipboardTool.show_in_menubar = false
+    spoon.ClipboardTool.frequency = 2
+    spoon.ClipboardTool.display_max_length = 72
+    -- spoon.ClipboardTool.max_entry_size = 40960
+    -- spoon.ClipboardTool.hist_size = 120
+    -- spoon.ClipboardTool.max_size = true
+    spoon.ClipboardTool:start()
+end
 
 ----------------------------------------------------------------------------------------------------
 -- automouse

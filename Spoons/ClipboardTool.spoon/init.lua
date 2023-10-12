@@ -299,14 +299,48 @@ function obj:_showContextMenu(row)
   print(hs.inspect(point))
 end
 
+local function chsize(char)
+	if not char then
+		print("not char")
+		return 0
+	elseif char > 240 then
+		return 4
+	elseif char > 225 then
+		return 3
+	elseif char > 192 then
+		return 2
+	else
+		return 1
+	end
+end
+
+function utf8sub(str, startChar, numChars)
+	local startIndex = 1
+	while startChar > 1 do
+		local char = string.byte(str, startIndex)
+		startIndex = startIndex + chsize(char)
+		startChar = startChar - 1
+	end
+
+	local currentIndex = startIndex
+
+	while numChars > 0 and currentIndex <= #str do
+		local char = string.byte(str, currentIndex)
+		currentIndex = currentIndex + chsize(char)
+		numChars = numChars -1
+	end
+	return str:sub(startIndex, currentIndex - 1)
+end
+
 -- Internal function - fill in the chooser options, including the control options
 function obj:_populateChooser(query)
    query = query:lower()
    menuData = {}
    for k,v in pairs(clipboard_history) do
       if (v.type == "text" and (query == "" or v.content:lower():find(query))) then
-         table.insert(menuData, { text = string.sub(v.content, 0, obj.display_max_length),
+         table.insert(menuData, { text = utf8sub(v.content, 0, obj.display_max_length),
                                   data = v.content,
+                                  image = hs.image.imageFromName('NSTouchBarTextBoxTemplate'),
                                   type = v.type})
       elseif (v.type == "image") then
          table.insert(menuData, { text = "《Image data》",
@@ -317,23 +351,23 @@ function obj:_populateChooser(query)
    end
    if #menuData == 0 then
       table.insert(menuData, { text="",
-                               subText="《Clipboard is empty》",
+                               subText="Clipboard is empty",
                                action = 'none',
                                image = hs.image.imageFromName('NSCaution')})
    else
-      table.insert(menuData, { text="《Clear Clipboard History》",
+      table.insert(menuData, { text="Clear Clipboard History",
                                action = 'clear',
                                image = hs.image.imageFromName('NSTrashFull') })
    end
    table.insert(menuData, {
-                   text="《" .. (self.paste_on_select and "Disable" or "Enable") .. " Paste-on-select》",
+                   text= (self.paste_on_select and "Disable" or "Enable") .. " Paste-on-select",
                    action = 'toggle_paste_on_select',
-                   image = (self.paste_on_select and hs.image.imageFromName('NSSwitchEnabledOn') or hs.image.imageFromName('NSSwitchEnabledOff'))
+                   image = (self.paste_on_select and hs.image.imageFromName('NSStatusPartiallyAvailable') or hs.image.imageFromName('NSStatusUnavailable'))
    })
    table.insert(menuData, {
-                   text="《" .. (self.max_size and "Disable" or "Enable") .. " max size " .. self.max_entry_size .. "》",
+                   text= (self.max_size and "Disable" or "Enable") .. " max size " .. self.max_entry_size,
                    action = 'toggle_max_size',
-                   image = (self.max_size and hs.image.imageFromName('NSSwitchEnabledOn') or hs.image.imageFromName('NSSwitchEnabledOff'))
+                   image = (self.max_size and hs.image.imageFromName('NSStatusPartiallyAvailable') or hs.image.imageFromName('NSStatusUnavailable'))
    })
    self.logger.df("Returning menuData = %s", hs.inspect(menuData))
    return menuData
@@ -392,8 +426,9 @@ function obj:checkAndStorePasteboard()
          current_clipboard = pasteboard.getContents()
          self.logger.df("current_clipboard = %s", tostring(current_clipboard))
          if (current_clipboard == nil) and (pasteboard.readImage() ~= nil) then
-            current_clipboard = pasteboard.readImage()
-            self:pasteboardToClipboard("image", current_clipboard:encodeAsURLString())
+            -- 不保存图片
+            -- current_clipboard = pasteboard.readImage()
+            -- self:pasteboardToClipboard("image", current_clipboard:encodeAsURLString())
             if self.show_copied_alert then
                 hs.alert.show("Copied image")
             end
@@ -401,12 +436,12 @@ function obj:checkAndStorePasteboard()
          elseif current_clipboard ~= nil then
            local size = #current_clipboard
            if obj.max_size and size > obj.max_entry_size then
-             local answer = hs.dialog.blockAlert("Clipboard", "The maximum size of " .. obj.max_entry_size .. " was exceeded.", "Copy partially", "Copy all", "NSCriticalAlertStyle")
-              print("answer: " .. answer)
-              if answer == "Copy partially" then
-                current_clipboard = self:reduceSize(current_clipboard)
-                size = #current_clipboard
-                end
+               local answer = hs.dialog.blockAlert("Clipboard", "The maximum size of " .. obj.max_entry_size .. " was exceeded.", "Copy partially", "Copy all", "NSCriticalAlertStyle")
+               print("answer: " .. answer)
+               if answer == "Copy partially" then
+                  current_clipboard = self:reduceSize(current_clipboard)
+                  size = #current_clipboard
+               end
             end
             if self.show_copied_alert then
                 hs.alert.show("Copied " .. size .. " chars")
