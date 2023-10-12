@@ -55,10 +55,12 @@ obj.honor_ignoredidentifiers = true
 --- Whether to auto-type the item when selecting it from the menu. Can be toggled on the fly from the chooser. Defaults to `false`.
 obj.paste_on_select = getSetting('paste_on_select', false)
 
+obj.save_image = true
+
 --- ClipboardTool.logger
 --- Variable
 --- Logger object used within the Spoon. Can be accessed to set the default log level for the messages coming from the Spoon.
-obj.logger = hs.logger.new('ClipboardTool')
+-- obj.logger = hs.logger.new('ClipboardTool')
 
 --- ClipboardTool.ignoredIdentifiers
 --- Variable
@@ -373,7 +375,7 @@ function obj:_populateChooser(query)
                    action = 'toggle_max_size',
                    image = (self.max_size and hs.image.imageFromName('NSStatusPartiallyAvailable') or hs.image.imageFromName('NSStatusUnavailable'))
    })
-   self.logger.df("Returning menuData = %s", hs.inspect(menuData))
+   -- self.logger.df("Returning menuData = %s", hs.inspect(menuData))
    return menuData
 end
 
@@ -428,18 +430,20 @@ function obj:checkAndStorePasteboard()
    if (now > last_change) then
       if (not self.honor_ignoredidentifiers) or self:shouldBeStored() then
          current_clipboard = pasteboard.getContents()
-         self.logger.df("current_clipboard = %s", tostring(current_clipboard))
+         -- self.logger.df("current_clipboard = %s", tostring(current_clipboard))
          if (current_clipboard == nil) and (pasteboard.readImage() ~= nil) then
             -- 不保存图片
-            current_clipboard = pasteboard.readImage()
-            local fileName = hashfn(current_clipboard:encodeAsURLString())
-            local filePathName = os.getenv("HOME").."/.hammerspoon/tmpimgs/"..fileName..'.png'
-            current_clipboard:saveToFile(filePathName)
-            self:pasteboardToClipboard("image", filePathName)
-            if self.show_copied_alert then
-                hs.alert.show("Copied image")
+            if obj.save_image then
+               current_clipboard = pasteboard.readImage()
+               local fileName = hashfn(current_clipboard:encodeAsURLString())
+               local filePathName = os.getenv("HOME").."/.hammerspoon/tmpimgs/"..fileName..'.png'
+               current_clipboard:saveToFile(filePathName)
+               self:pasteboardToClipboard("image", filePathName)
+               if self.show_copied_alert then
+                  hs.alert.show("Copied image")
+               end
+               -- self.logger.df("Adding image (hashed) %s to clipboard history clipboard", hashfn(current_clipboard:encodeAsURLString()))
             end
-            -- self.logger.df("Adding image (hashed) %s to clipboard history clipboard", hashfn(current_clipboard:encodeAsURLString()))
          elseif current_clipboard ~= nil then
            local size = #current_clipboard
            if obj.max_size and size > obj.max_entry_size then
@@ -453,13 +457,13 @@ function obj:checkAndStorePasteboard()
             if self.show_copied_alert then
                 hs.alert.show("Copied " .. size .. " chars")
             end
-            self.logger.df("Adding %s to clipboard history", current_clipboard)
+            -- self.logger.df("Adding %s to clipboard history", current_clipboard)
             self:pasteboardToClipboard("text", current_clipboard)
          else
-            self.logger.df("Ignoring nil clipboard content")
+            -- self.logger.df("Ignoring nil clipboard content")
          end
       else
-         self.logger.df("Ignoring pasteboard entry because it matches ignoredIdentifiers")
+         -- self.logger.df("Ignoring pasteboard entry because it matches ignoredIdentifiers")
       end
       last_change = now
    end
@@ -472,7 +476,7 @@ end
 --- Parameters:
 ---  * None
 function obj:start()
-   obj.logger.level = 0
+   -- obj.logger.level = 0
    clipboard_history = self:dedupe_and_resize(getSetting("items", {})) -- If no history is saved on the system, create an empty history
    last_change = pasteboard.changeCount() -- keeps track of how many times the pasteboard owner has changed // Indicates a new copy has been made
    self.selectorobj = hs.chooser.new(hs.fnutils.partial(self._processSelectedItem, self))

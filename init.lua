@@ -264,6 +264,7 @@ if spoon.ClipboardTool then
     spoon.ClipboardTool.show_in_menubar = false
     spoon.ClipboardTool.frequency = 2
     spoon.ClipboardTool.display_max_length = 72
+    spoon.ClipboardTool.save_image = false
     -- spoon.ClipboardTool.max_entry_size = 40960
     -- spoon.ClipboardTool.hist_size = 120
     -- spoon.ClipboardTool.max_size = true
