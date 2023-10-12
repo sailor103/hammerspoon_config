@@ -16,16 +16,16 @@ obj.appSearchPaths = {
    "/Applications",
    "/System/Applications",
    "~/Applications",
-   "/Developer/Applications",
-   "/Applications/Xcode.app/Contents/Applications",
-   "/System/Library/PreferencePanes",
-   "/Library/PreferencePanes",
-   "~/Library/PreferencePanes",
-   "/System/Library/CoreServices/Applications",
-   "/System/Library/CoreServices/",
+   -- "/Developer/Applications",
+   -- "/Applications/Xcode.app/Contents/Applications",
+   -- "/System/Library/PreferencePanes",
+   -- "/Library/PreferencePanes",
+   -- "~/Library/PreferencePanes",
+   -- "/System/Library/CoreServices/Applications",
+   -- "/System/Library/CoreServices/",
    "/usr/local/Cellar",
-   "/Library/Scripts",
-   "~/Library/Scripts"
+   -- "/Library/Scripts",
+   -- "~/Library/Scripts"
 }
 
 local modifyNameMap = function(info, add)

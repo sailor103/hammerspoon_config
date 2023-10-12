@@ -226,7 +226,7 @@ end
 if spoon.Seal then
     seal_keys = seal_keys or {{"cmd"}, "Space"}
     spoon.Seal:bindHotkeys({ show = seal_keys })
-    spoon.Seal:loadPlugins({ "apps", "calc", "filesearch", "useractions", "vscode"--[[, "pasteboard"--]] })
+    spoon.Seal:loadPlugins({ "apps", "calc", "filesearch", "useractions", "vscode", "youdao"--[[, "pasteboard"--]] })
     spoon.Seal.plugins.useractions.actions = {
       ["Open Multiple Wechat"] = {
          keyword = "wc",
