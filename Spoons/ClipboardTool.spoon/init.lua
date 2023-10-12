@@ -346,7 +346,11 @@ function obj:_populateChooser(query)
          table.insert(menuData, { text = "Image",
                                   type = v.type,
                                   data = v.content,
-                                  image = hs.image.imageFromPath(v.content)})
+                                  image = hs.image.imageFromPath(v.content):bitmapRepresentation({
+                                    w = 30,
+                                    h = 20
+                                  })})
+                                 --  image = hs.image.imageFromPath(v.content)})
       end
    end
    if #menuData == 0 then
@@ -435,7 +439,7 @@ function obj:checkAndStorePasteboard()
             if self.show_copied_alert then
                 hs.alert.show("Copied image")
             end
-            self.logger.df("Adding image (hashed) %s to clipboard history clipboard", hashfn(current_clipboard:encodeAsURLString()))
+            -- self.logger.df("Adding image (hashed) %s to clipboard history clipboard", hashfn(current_clipboard:encodeAsURLString()))
          elseif current_clipboard ~= nil then
            local size = #current_clipboard
            if obj.max_size and size > obj.max_entry_size then
