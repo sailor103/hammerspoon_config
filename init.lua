@@ -262,7 +262,7 @@ if spoon.ClipboardTool then
     spoon.ClipboardTool.paste_on_select = true
     spoon.ClipboardTool.show_copied_alert = false
     spoon.ClipboardTool.show_in_menubar = false
-    spoon.ClipboardTool.frequency = 2
+    spoon.ClipboardTool.frequency = 1
     spoon.ClipboardTool.display_max_length = 72
     spoon.ClipboardTool.save_image = false
     -- spoon.ClipboardTool.max_entry_size = 40960
