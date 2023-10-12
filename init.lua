@@ -242,6 +242,14 @@ if spoon.Seal then
             slug = string.lower(slug)
             hs.pasteboard.setContents(slug)
          end,
+      },
+      ["VPN Pass"] = {
+         keyword = "vpn",
+         fn = function(p) 
+            if (p == 'p') then
+                hs.pasteboard.setContents('3My5tyUPcjTH')
+            end
+         end,
       }
     }
     -- spoon.Seal.plugins.pasteboard.historySize=100
