@@ -282,14 +282,14 @@ function obj:_showContextMenu(row)
   point = hs.mouse.getAbsolutePosition()
   local menu = hs.menubar.new(false)
   local menuTable = {
-       { title = "Alle Schnipsel mit Tab einfügen", fn = hs.fnutils.partial(self.pasteAllWithDelimiter, self, row, "\t") },
-       { title = "Alle Schnipsel mit Zeilenvorschub einfügen", fn = hs.fnutils.partial(self.pasteAllWithDelimiter, self, row, "\n") },
+       { title = "使用 Tab 插入所有片段", fn = hs.fnutils.partial(self.pasteAllWithDelimiter, self, row, "\t") },
+       { title = "使用换行符插入所有片段", fn = hs.fnutils.partial(self.pasteAllWithDelimiter, self, row, "\n") },
        { title = "-" },
-       { title = "Eintrag entfernen",   fn = hs.fnutils.partial(self.manageClip, self, row, 0) },
-       { title = "Eintrag an erste Stelle",   fn = hs.fnutils.partial(self.manageClip, self, row, -100)  },
-       { title = "Eintrag nach oben",   fn = hs.fnutils.partial(self.manageClip, self, row, -1)  },
-       { title = "Eintrag nach unten",   fn = hs.fnutils.partial(self.manageClip, self, row, 1) },
-       { title = "Tabelle invertieren",   fn = hs.fnutils.partial(self.manageClip, self, row, 2) },
+       { title = "删除条目",   fn = hs.fnutils.partial(self.manageClip, self, row, 0) },
+       { title = "置顶",   fn = hs.fnutils.partial(self.manageClip, self, row, -100)  },
+       { title = "上移",   fn = hs.fnutils.partial(self.manageClip, self, row, -1)  },
+       { title = "下移",   fn = hs.fnutils.partial(self.manageClip, self, row, 1) },
+       { title = "倒置",   fn = hs.fnutils.partial(self.manageClip, self, row, 2) },
        { title = "-" },
        { title = "disabled item", disabled = true },
        { title = "checked item", checked = true },
