@@ -243,6 +243,12 @@ if spoon.Seal then
             hs.pasteboard.setContents(slug)
          end,
       },
+      ["Open Url"] = {
+         keyword = "url",
+         fn = function(url) 
+            hs.urlevent.openURL(url)
+         end,
+      },
       ["VPN Pass"] = {
          keyword = "vpn",
          fn = function(p) 
