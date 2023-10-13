@@ -246,7 +246,13 @@ if spoon.Seal then
       ["Open Url"] = {
          keyword = "url",
          fn = function(url) 
-            hs.urlevent.openURL(url)
+            local localUrl = '';
+            if string.match(url, "http") then
+                localUrl = url
+            else
+                localUrl = "https://" .. url
+            end
+            hs.urlevent.openURL(localUrl)
          end,
       },
       ["VPN Pass"] = {
