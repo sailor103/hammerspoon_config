@@ -16,7 +16,7 @@ hs.loadSpoon("ModalMgr")
 if not hspoon_list then
     hspoon_list = {
 			"KSheet", 
-            -- "BingDaily",
+            "BingDaily",
             "ClipboardTool",
             -- "HSearch",
             "Seal",
@@ -262,7 +262,13 @@ if spoon.Seal then
                 hs.pasteboard.setContents('3My5tyUPcjTH')
             end
          end,
-      }
+      },
+      ["Get Wallpaper"] = {
+         keyword = "wall",
+         fn = function() 
+            spoon.BingDaily:bingRequest()
+         end,
+      },
     }
     -- spoon.Seal.plugins.pasteboard.historySize=100
     -- spoon.Seal.plugins.pasteboard.paste_on_select=true
