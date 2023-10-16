@@ -147,7 +147,7 @@ function obj.choicesApps(query)
       return choices
    end
    for name,app in pairs(obj.appCache) do
-      if string.match(name:lower(), query:lower()) then
+      if string.match(name:lower(), query:lower()) or string.match(app.path:lower(), query:lower()) then
          local choice = {}
          local instances = {}
          if app["bundleID"] then
