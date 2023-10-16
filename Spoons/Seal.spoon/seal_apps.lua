@@ -22,7 +22,7 @@ obj.appSearchPaths = {
    -- "/Library/PreferencePanes",
    -- "~/Library/PreferencePanes",
    -- "/System/Library/CoreServices/Applications",
-   -- "/System/Library/CoreServices/",
+   "/System/Library/CoreServices/",
    "/usr/local/Cellar",
    -- "/Library/Scripts",
    -- "~/Library/Scripts"

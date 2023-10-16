@@ -18,7 +18,7 @@ local function curl_callback(exitCode, stdOut, stdErr)
     if exitCode == 0 then
         obj.task = nil
         obj.last_pic = hs.http.urlParts(obj.full_url).lastPathComponent
-        local localpath = os.getenv("HOME") .. "/.Trash/" .. hs.http.urlParts(obj.full_url).lastPathComponent
+        local localpath = os.getenv("HOME") .. "/Pictures/bing/" .. hs.http.urlParts(obj.full_url).lastPathComponent .. '.png'
         hs.screen.mainScreen():desktopImageURL("file://" .. localpath)
     else
         print(stdOut, stdErr)
@@ -40,7 +40,7 @@ function obj:bingRequest()
                         obj.task:terminate()
                         obj.task = nil
                     end
-                    local localpath = os.getenv("HOME") .. "/.Trash/" .. hs.http.urlParts(obj.full_url).lastPathComponent
+                    local localpath = os.getenv("HOME") .. "/Pictures/bing/" .. hs.http.urlParts(obj.full_url).lastPathComponent .. '.png'
                     obj.task = hs.task.new("/usr/bin/curl", curl_callback, {"-A", user_agent_str, obj.full_url, "-o", localpath})
                     obj.task:start()
                 end
