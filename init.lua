@@ -16,12 +16,12 @@ hs.loadSpoon("ModalMgr")
 if not hspoon_list then
     hspoon_list = {
 			"KSheet", 
-            "BingDaily",
+            -- "BingDaily",
             "ClipboardTool",
             -- "HSearch",
             "Seal",
 			"WinWin",
-			"MouseFollowsFocus",
+			-- "MouseFollowsFocus",
 		}
 end
 
@@ -319,6 +319,11 @@ gis_job_keys = gis_job_keys or {{"cmd", "alt", "ctrl"}, "C"}
 if string.len(gis_job_keys[2]) > 0 then
     spoon.ModalMgr.supervisor:bind(gis_job_keys[1], gis_job_keys[2], "GIS Jobs Keywords", function()
         hs.pasteboard.setContents('地理 测绘 遥感 规划 土地 空间信息')
+        hs.eventtap.keyStroke({"cmd"}, "v")
+        hs.eventtap.keyStroke({}, "return")
+        hs.timer.doAfter(0.6, function ()
+            hs.eventtap.keyStroke({"alt"}, "a")
+        end)
     end)
 end
 
