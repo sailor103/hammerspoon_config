@@ -53,4 +53,20 @@ function LOCAL_UTILS.utf8len(input)
     return cnt
 end
 
+local function char_to_pchar(c)
+	return string.format("%%%02X", c:byte(1,1))
+end
+
+function LOCAL_UTILS.encodeURI(str)
+	return (str:gsub("[^%;%,%/%?%:%@%&%=%+%$%w%-%_%.%!%~%*%'%(%)%#]", char_to_pchar))
+end
+
+function LOCAL_UTILS.encodeURIComponent(str)
+	return (str:gsub("[^%w%-_%.%!%~%*%'%(%)]", char_to_pchar))
+end
+
+function LOCAL_UTILS.trim(s)
+  return (string.gsub(s, "^%s*(.-)%s*$", "%1"))
+end
+
 return LOCAL_UTILS

@@ -2,6 +2,8 @@ hs.hotkey.alertDuration = 0
 hs.hints.showTitleThresh = 0
 hs.window.animationDuration = 0
 
+local utils = require("./utils")
+
 hsreload_keys = hsreload_keys or {{"cmd", "shift", "ctrl"}, "R"}
 if string.len(hsreload_keys[2]) > 0 then
     hs.hotkey.bind(hsreload_keys[1], hsreload_keys[2], "Reload Configuration", function()
@@ -17,7 +19,7 @@ if not hspoon_list then
     hspoon_list = {
 			"KSheet", 
             -- "BingDaily",
-            "ClipboardTool",
+            -- "ClipboardTool",
             -- "HSearch",
             "Seal",
 			"WinWin",
@@ -224,7 +226,7 @@ end
 ----------------------------------------------------------------------------------------------------
 -- Seal 替换Alfred
 if spoon.Seal then
-    seal_keys = seal_keys or {{"cmd"}, "Space"}
+    seal_keys = seal_keys or {{"alt"}, "Space"}
     spoon.Seal:bindHotkeys({ show = seal_keys })
     spoon.Seal:loadPlugins({ "apps", "calc", "filesearch", "useractions", "vscode", "youdao"--[[, "pasteboard"--]] })
     spoon.Seal.plugins.useractions.actions = {
@@ -261,6 +263,13 @@ if spoon.Seal then
             if (p == 'p') then
                 hs.pasteboard.setContents('3My5tyUPcjTH')
             end
+         end,
+      },
+      ["mala jump"] = {
+         keyword = "jump",
+         fn = function(p) 
+            localUrl = utils.trim(p)
+            hs.pasteboard.setContents('https://malagis.com/gzh/jump.html?target=' .. utils.encodeURIComponent(localUrl))
          end,
       },
       ["Get Wallpaper"] = {
