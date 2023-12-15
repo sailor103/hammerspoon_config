@@ -266,7 +266,7 @@ if spoon.Seal then
          end,
       },
       ["mala jump"] = {
-         keyword = "jump",
+         keyword = "j",
          fn = function(p) 
             localUrl = utils.trim(p)
             hs.pasteboard.setContents('https://malagis.com/gzh/jump.html?target=' .. utils.encodeURIComponent(localUrl))
