@@ -269,7 +269,7 @@ if spoon.Seal then
          keyword = "j",
          fn = function(p) 
             localUrl = utils.trim(p)
-            hs.pasteboard.setContents('https://malagis.com/gzh/jump.html?target=' .. utils.encodeURIComponent(localUrl))
+            hs.pasteboard.setContents('https://malagis.com/extension/jump.html?target=' .. utils.encodeURIComponent(localUrl))
          end,
       },
       ["Get Wallpaper"] = {
